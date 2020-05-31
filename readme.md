@@ -1,7 +1,2 @@
 # Screenshot
-![screenshot](screenshot.jpeg =300x)
-
-img[alt="screenshot"] { 
-  max-width:  250px; 
-  display: block;
-}
+<img src="screenshot.jpeg" width="300" height="790">
