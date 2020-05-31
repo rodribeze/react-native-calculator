@@ -92,7 +92,7 @@ class App extends Component {
             <Display value={this.state.displayValue}></Display>
             <View style={styles.buttons}>
                <Button label="AC" onClick={this.resetar} triple></Button>
-               <Button label="/" operation onClick={this.SET_CONDICAO} ></Button>
+               <Button label="%" value="/" operation onClick={this.SET_CONDICAO} ></Button>
                <Button label="7" onClick={this.SET_DIGITO} ></Button>
                <Button label="8"  onClick={this.SET_DIGITO} ></Button>
                <Button label="9"  onClick={this.SET_DIGITO} ></Button>
