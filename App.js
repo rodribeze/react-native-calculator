@@ -48,21 +48,28 @@ class App extends Component {
 
       if(this.inPrimeiroValor()){
 
-         if(digito === '.' && this.state.primeiro_valor && this.state.primeiro_valor.includes('.')) return;
+         if(digito === '.' && this.state.primeiro_valor && String(this.state.primeiro_valor).includes('.')) return;
+         if(digito === '-' && this.state.primeiro_valor && String(this.state.primeiro_valor).includes('-')) return;
 
-         let primeiro_valor = parseFloat(`${this.state.primeiro_valor === null ? 0 : this.state.primeiro_valor}${digito}`)
+         let primeiro_valor = (`${this.state.primeiro_valor === null ? 0 : this.state.primeiro_valor}${digito}`)
 
+         if(digito !== '.' && digito !== '-') primeiro_valor = parseFloat(primeiro_valor)
+         
          if(this.state.primeiro_valor === null && digito == '.') primeiro_valor = '0.'
+         if(this.state.primeiro_valor === null && digito == '-') primeiro_valor = '-'
          
          this.setState({ primeiro_valor, displayValue: primeiro_valor })
 
       } else if (this.inSegundoValor()){
          
-         if(digito === '.' && this.state.segundo_valor.includes('.')) return;
+         if(digito === '.' && this.state.segundo_valor && String(this.state.segundo_valor).includes('.')) return;
+         if(digito === '-' && this.state.segundo_valor && String(this.state.segundo_valor).includes('-')) return;
 
-         let segundo_valor = parseFloat(`${this.state.segundo_valor === null ? 0 : this.state.segundo_valor}${digito}`)
+         let segundo_valor = (`${this.state.segundo_valor === null ? 0 : this.state.segundo_valor}${digito}`)
 
-         if(this.state.primeiro_valor === null && digito == '.') segundo_valor = '0.'
+         if(digito !== '.' && digito !== '-') segundo_valor = parseFloat(segundo_valor)
+         if(this.state.segundo_valor === null && digito == '.') segundo_valor = '0.'
+         if(this.state.segundo_valor === null && digito == '-') segundo_valor = '-'
          
          this.setState({ segundo_valor, displayValue: segundo_valor })
 
@@ -73,15 +80,19 @@ class App extends Component {
    SET_CONDICAO = condicao => {
 
       const equals = condicao === '='
+      const minus = condicao === '-'
 
+      if(this.state.primeiro_valor === null && minus) return this.SET_DIGITO('-');
       if(this.state.primeiro_valor === null) return;
+      if(this.state.primeiro_valor !== null && this.state.segundo_valor === null && this.state.condicao && minus) return this.SET_DIGITO('-');
+
 
       if(!equals && !this.inSegundoValor() || this.state.segundo_valor === null){
          this.setState({ condicao })
          return;
       }
 
-      if(this.inSegundoValor()) this.soma()
+      if(this.inSegundoValor() && this.state.segundo_valor !== null && this.state.segundo_valor !== minus && this.state.segundo_valor !== '0.') this.soma()
       if(!equals && this.inSegundoValor()) this.setState({ condicao })
 
    }
