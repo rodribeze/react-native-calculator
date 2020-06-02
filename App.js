@@ -82,6 +82,9 @@ class App extends Component {
       const equals = condicao === '='
       const minus = condicao === '-'
 
+      if(equals && !this.inSegundoValor()) return
+      if(equals && this.inSegundoValor() && (this.state.segundo_valor == minus || this.state.segundo_valor == '.') ) return
+
       if(this.state.primeiro_valor === null && minus) return this.SET_DIGITO('-');
       if(this.state.primeiro_valor === null) return;
       if(this.state.primeiro_valor !== null && this.state.segundo_valor === null && this.state.condicao && minus) return this.SET_DIGITO('-');
